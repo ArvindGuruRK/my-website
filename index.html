@@ -401,6 +401,34 @@
       <a href="#home" class="back-to-top" aria-label="Back to top">↑</a>
     </footer>
 
+    <!-- Chatbot widget -->
+    <button class="chat-toggle" id="chatToggle" aria-label="Open chat">
+      💬
+    </button>
+    <div
+      class="chatbox"
+      id="chatBox"
+      aria-live="polite"
+      aria-label="Chat window"
+      hidden
+    >
+      <div class="chat-header">
+        <span>Ask Arvind (Simple Chat)</span>
+        <button id="chatClose" aria-label="Close chat">✕</button>
+      </div>
+      <div class="chat-messages" id="chatMessages"></div>
+      <form class="chat-input" id="chatForm">
+        <input
+          type="text"
+          id="chatPrompt"
+          placeholder="Type your message..."
+          autocomplete="off"
+          required
+        />
+        <button type="submit" class="btn primary">Send</button>
+      </form>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.net.min.js"></script>
     <script src="script.js"></script>

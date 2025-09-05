@@ -101,3 +101,52 @@ document.getElementById("year").textContent = new Date().getFullYear();
   }
   // Use only one Vanta instance for both Home and About; background is fixed
 })();
+
+// Simple chat widget calling local RAG bot
+(function () {
+  const toggle = document.getElementById("chatToggle");
+  const box = document.getElementById("chatBox");
+  const closeBtn = document.getElementById("chatClose");
+  const form = document.getElementById("chatForm");
+  const input = document.getElementById("chatPrompt");
+  const messages = document.getElementById("chatMessages");
+  if (!toggle || !box || !form) return;
+  const API_URL = window.RAG_API_URL || "http://127.0.0.1:5000/chat";
+
+  function addMsg(text, who) {
+    const el = document.createElement("div");
+    el.className = `msg ${who}`;
+    el.textContent = text;
+    messages.appendChild(el);
+    messages.scrollTop = messages.scrollHeight;
+  }
+  toggle.addEventListener("click", () => {
+    box.hidden = !box.hidden;
+    if (!box.hidden) input.focus();
+  });
+  closeBtn &&
+    closeBtn.addEventListener("click", () => {
+      box.hidden = true;
+    });
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const prompt = input.value.trim();
+    if (!prompt) return;
+    addMsg(prompt, "user");
+    input.value = "";
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt }),
+      });
+      const data = await res.json();
+      addMsg(data.response || "No response", "bot");
+    } catch (err) {
+      addMsg(
+        "Error contacting bot. Is the backend running on 127.0.0.1:5000?",
+        "bot"
+      );
+    }
+  });
+})();
