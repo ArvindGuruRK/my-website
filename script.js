@@ -113,6 +113,9 @@ document.getElementById("year").textContent = new Date().getFullYear();
   if (!toggle || !box || !form) return;
   const API_URL = window.RAG_API_URL || "http://127.0.0.1:5000/chat";
 
+  // Ensure chatbox is hidden initially
+  box.hidden = true;
+
   function addMsg(text, who) {
     const el = document.createElement("div");
     el.className = `msg ${who}`;
@@ -120,14 +123,38 @@ document.getElementById("year").textContent = new Date().getFullYear();
     messages.appendChild(el);
     messages.scrollTop = messages.scrollHeight;
   }
+  
+  // Toggle chat box visibility with smooth animation
   toggle.addEventListener("click", () => {
-    box.hidden = !box.hidden;
-    if (!box.hidden) input.focus();
+    if (box.hidden) {
+      // Show the box first (but with opacity 0)
+      box.hidden = false;
+      box.style.opacity = '0';
+      box.style.transform = 'translateY(20px)';
+      
+      // Force a reflow to ensure the transition works
+      void box.offsetWidth;
+      
+      // Then animate it in
+      box.style.opacity = '1';
+      box.style.transform = 'translateY(0)';
+      input.focus();
+    }
   });
-  closeBtn &&
+  
+  // Close chat box with smooth animation
+  if (closeBtn) {
     closeBtn.addEventListener("click", () => {
-      box.hidden = true;
+      // Animate out
+      box.style.opacity = '0';
+      box.style.transform = 'translateY(20px)';
+      
+      // Hide after animation completes
+      setTimeout(() => {
+        box.hidden = true;
+      }, 400); // Match the transition duration in CSS
     });
+  }
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const prompt = input.value.trim();
