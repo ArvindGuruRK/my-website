@@ -469,7 +469,7 @@ textarea:focus {
 .chat-toggle {
   position: fixed;
   right: 20px;
-  bottom: 20px;
+  bottom: 70px;
   width: 48px;
   height: 48px;
   border-radius: 999px;
@@ -489,9 +489,9 @@ textarea:focus {
 #chatBox {
   position: fixed;
   right: 20px;
-  bottom: 80px;
+  bottom: 130px;
   width: 280px;
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 170px);
   display: flex;
   flex-direction: column;
   background: linear-gradient(135deg, #121a2e, #0b1020);
