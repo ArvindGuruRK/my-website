@@ -111,7 +111,7 @@ document.getElementById("year").textContent = new Date().getFullYear();
   const input = document.getElementById("chatPrompt");
   const messages = document.getElementById("chatMessages");
   if (!toggle || !box || !form) return;
-  const API_URL = window.RAG_API_URL || "http://127.0.0.1:5000/chat";
+  const API_URL = window.RAG_API_URL || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? "http://127.0.0.1:5000/chat" : "/api/chat");
 
   // Ensure chatbox is hidden initially
   box.hidden = true;
