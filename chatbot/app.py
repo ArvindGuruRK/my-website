@@ -3,7 +3,7 @@ from flask_cors import CORS
 import os
 import json
 
-app = Flask(__name__, static_folder='../static', template_folder='../')
+app = Flask(__name__, static_folder='..', template_folder='..')
 CORS(app)
 
 # Load predefined Q&A data
@@ -181,12 +181,18 @@ def find_answer(user_query):
 
 @app.route("/")
 def index():
-    return send_file("../index.html")
+    try:
+        return send_file(os.path.join("..", "index.html"))
+    except FileNotFoundError:
+        return "Index file not found", 404
 
 @app.route("/<path:filename>")
 def serve_static(filename):
     # Serve static files from the parent directory
-    return send_from_directory("..", filename)
+    try:
+        return send_from_directory("..", filename)
+    except FileNotFoundError:
+        return f"File {filename} not found", 404
 
 @app.route("/chat", methods=["POST"])
 def chat():
