@@ -111,7 +111,12 @@ document.getElementById("year").textContent = new Date().getFullYear();
   const input = document.getElementById("chatPrompt");
   const messages = document.getElementById("chatMessages");
   if (!toggle || !box || !form) return;
-  const API_URL = window.RAG_API_URL || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? "http://127.0.0.1:5000/chat" : "/api/chat");
+  const API_URL =
+    window.RAG_API_URL ||
+    (window.location.hostname === "localhost" ||
+    window.location.hostname === "127.0.0.1"
+      ? "http://127.0.0.1:5000/chat"
+      : "/chat");
 
   // Ensure chatbox is hidden initially
   box.hidden = true;
@@ -123,32 +128,32 @@ document.getElementById("year").textContent = new Date().getFullYear();
     messages.appendChild(el);
     messages.scrollTop = messages.scrollHeight;
   }
-  
+
   // Toggle chat box visibility with smooth animation
   toggle.addEventListener("click", () => {
     if (box.hidden) {
       // Show the box first (but with opacity 0)
       box.hidden = false;
-      box.style.opacity = '0';
-      box.style.transform = 'translateY(20px)';
-      
+      box.style.opacity = "0";
+      box.style.transform = "translateY(20px)";
+
       // Force a reflow to ensure the transition works
       void box.offsetWidth;
-      
+
       // Then animate it in
-      box.style.opacity = '1';
-      box.style.transform = 'translateY(0)';
+      box.style.opacity = "1";
+      box.style.transform = "translateY(0)";
       input.focus();
     }
   });
-  
+
   // Close chat box with smooth animation
   if (closeBtn) {
     closeBtn.addEventListener("click", () => {
       // Animate out
-      box.style.opacity = '0';
-      box.style.transform = 'translateY(20px)';
-      
+      box.style.opacity = "0";
+      box.style.transform = "translateY(20px)";
+
       // Hide after animation completes
       setTimeout(() => {
         box.hidden = true;
